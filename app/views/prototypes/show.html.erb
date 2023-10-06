@@ -51,21 +51,22 @@
             <% @prototype.comments.each do |comment| %>
              <li class="comments_list">
               <% if comment.present? && comment.user.present? %>
-  <div class="comment-container">
-    <span class="comment-content"><%= comment.content %></span>
-    <span class="comment-user">
-      <%= link_to "by " + comment.user.name, user_path(comment.user), class: :prototype__user %>
-    </span>
-  </div>
-<% else %>
-  <li class="comments_list">
-    No content available
-  </li>
-<% end %>
-                <% end %>
-              </ul>
-           <% end %>
-          </div>
+               <div class="comment-container">
+                <span class="comment-content"><%= comment.content %></span>
+                  <span class="comment-user">
+                    <%= link_to "by " + comment.user.name, user_path(comment.user), class: :prototype__user %>
+                     </span>
+                      </div>
+                       <% else %>
+                  <!-- Comment content is not present or user is not present -->
+            <% end %>
+           </li>
+         <% end %>
+         </ul>
+       <% else %>
+      <!-- User is not signed in or there are no comments for the prototype -->
+    <% end %>
+             </div>
           </div>
        </div>
    </main>
