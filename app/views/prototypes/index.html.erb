@@ -1,6 +1,7 @@
 <main class="main">
   <div class="inner">
     <%# ログインしているときは以下を表示する %>
+    
      <% if user_signed_in? %>
         <div class="greeting"> 
            <%= link_to "こんにちは #{current_user.name}さん", user_path(current_user) %>
