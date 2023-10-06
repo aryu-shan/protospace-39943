@@ -9,14 +9,20 @@
 # And be sure to use new-style password hashing:
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
-default: &default
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  
-  
-  # adapter: mysql2
+  # default: &default
   # encoding: utf8
   # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  
+  development:
+  <<: *default
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
+  database: protospace_39943_development
+
+  
+  # adapter: mysql2
   # username: root
   # password:
   # socket: /tmp/mysql.sock
