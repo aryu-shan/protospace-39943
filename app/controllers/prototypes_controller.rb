@@ -1,6 +1,7 @@
 class PrototypesController < ApplicationController
   before_action :authenticate_user!,except: [:index, :show]
-  before_action :move_to_index, except: [:index, :show, :edit]
+  before_action :set_prototype, only: [:show, :edit, :update, :destroy]
+  before_action :move_to_index, except: [:index, :show]
 
   def index
     @prototypes = Prototype.all
@@ -26,9 +27,12 @@ class PrototypesController < ApplicationController
 
 
   def edit
-    @prototype = Prototype.find(params[:id])
+    @prototype = Prototype.find(params[:id]) 
+    if current_user != @prototype.user
+      redirect_to root_path
+   end
   end
-
+  
   def update
      @prototype = Prototype.find(params[:id])
       if  @prototype.update(prototype_params) 
@@ -58,8 +62,12 @@ class PrototypesController < ApplicationController
     # 必要に応じてユーザーパラメータを設定してください
   end
 
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+
   def move_to_index
-    unless user_signed_in? && current_user.id == @prototype.user_id
+    unless user_signed_in? 
       redirect_to action: :index
     end
   end

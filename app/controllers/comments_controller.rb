@@ -1,5 +1,12 @@
 class CommentsController < ApplicationController
 
+  
+  def index
+    @prototype = Prototype.find(params[:prototype_id])
+    @comments = @prototype.comments
+  end
+  
+  
   def create
     @prototype = Prototype.find(params[:prototype_id]) # プロトタイプを取得する
     @comment = @prototype.comments.build(comment_params)
@@ -11,11 +18,7 @@ class CommentsController < ApplicationController
       render "prototypes/show" # views/tweets/show.html.erbのファイルを参照しています。
     end
    end
-
-  
-
-  
-  
+   
      private
 
     def comment_params

@@ -31,42 +31,35 @@
           </p>
         </div>
       </div>
-      <div class="prototype__comments">
-        <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
-          <% if user_signed_in? %>
-           <%= form_with(model: [@prototype, @prototype.comments.build], local: true) do |f| %>
-            <div class="field">
-              <%= f.label :content, "コメント" %><br />
-              <%= f.text_area :content, id: "comment_content" %>    
-               </div>
-             <div class="actions">
-              <%= f.submit "送信する", class: :form__btn %>
-            </div>
-          <% end %>
-        <% end %>
-                       
-        <!-- コメント関係 -->
-        <% if user_signed_in? %>
-          <ul class="comments_lists">
-            <% @prototype.comments.each do |comment| %>
-             <li class="comments_list">
-              <% if comment.present? && comment.user.present? %>
-               <div class="comment-container">
-                <span class="comment-content"><%= comment.content %></span>
-                  <span class="comment-user">
-                    <%= link_to "by " + comment.user.name, user_path(comment.user), class: :prototype__user %>
-                     </span>
-                      </div>
-                       <% else %>
-                  <!-- Comment content is not present or user is not present -->
-            <% end %>
-           </li>
-         <% end %>
-         </ul>
-       <% else %>
-      <!-- User is not signed in or there are no comments for the prototype -->
+
+        <div class="prototype__comments">
+    <!-- ログインしている場合にコメント投稿フォームを表示する -->
+    <% if user_signed_in? %>
+      <%= form_with(model: [@prototype, @prototype.comments.build], local: true) do |f| %>
+        <div class="field">
+          <%= f.label :content, "コメント" %><br />
+          <%= f.text_area :content, id: "comment_content" %>    
+        </div>
+        <div class="actions">
+          <%= f.submit "送信する", class: :form__btn %>
+        </div>
+      <% end %>
     <% end %>
-             </div>
+
+    <!-- コメント一覧を表示する -->
+    <ul class="comments_lists">
+      <% @prototype.comments.each do |comment| %>
+        <li class="comments_list">
+          <div class="comment-container">
+            <span class="comment-content"><%= comment.content %></span>
+             <% if comment.user.present? %>
+            <span class="comment-user">
+              <%= link_to "by " + comment.user.name, user_path(comment.user), class: :prototype__user %>
+            </span>
+             <% end %>
           </div>
-       </div>
-   </main>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</main>
